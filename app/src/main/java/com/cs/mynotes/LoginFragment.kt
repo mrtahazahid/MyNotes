@@ -12,13 +12,18 @@ import androidx.navigation.fragment.findNavController
 import com.cs.mynotes.databinding.FragmentLoginBinding
 import com.cs.mynotes.models.UserRequest
 import com.cs.mynotes.utils.NetworkResult
+import com.cs.mynotes.utils.TokenManager
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class LoginFragment : Fragment() {
     private var _binding : FragmentLoginBinding? = null
     private val binding get() = _binding!!
     private val authViewModel by viewModels<AuthViewModel>()
+
+    @Inject
+    lateinit var tokenManager: TokenManager
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -64,7 +69,9 @@ class LoginFragment : Fragment() {
             binding.progressBar.isVisible = false
             when (it) {
                 is NetworkResult.Success -> {
-                    //Token work is pending
+
+                    tokenManager.saveToken(it.data!!.token)
+
                     findNavController().navigate(R.id.action_loginFragment_to_mainFragment)
                 }
                 is NetworkResult.Error -> {
