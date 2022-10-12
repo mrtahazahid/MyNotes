@@ -60,9 +60,9 @@ class NoteFragment : Fragment() {
         }
         binding.apply {
             btnSubmit.setOnClickListener {
-                val title = txtTitle.text.toString()
-                val description = txtDescription.text.toString()
-                val noteRequest = NoteRequest(title, description)
+                val title = binding.txtTitle.text.toString()
+                val description = binding.txtDescription.text.toString()
+                val noteRequest = NoteRequest(description, title)
                 if (note == null) {
                     noteViewModel.createNote(noteRequest)
                 } else {
