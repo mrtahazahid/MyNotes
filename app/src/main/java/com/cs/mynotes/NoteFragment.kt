@@ -56,7 +56,7 @@ class NoteFragment : Fragment() {
 
     private fun bindHandlers() {
         binding.btnDelete.setOnClickListener {
-            note?.let { noteViewModel.deleteNote(it!!.message._id) }
+            note?.let { noteViewModel.deleteNote(it!!._id) }
         }
         binding.apply {
             btnSubmit.setOnClickListener {
@@ -66,7 +66,7 @@ class NoteFragment : Fragment() {
                 if (note == null) {
                     noteViewModel.createNote(noteRequest)
                 } else {
-                    noteViewModel.updateNote(note!!.message._id, noteRequest)
+                    noteViewModel.updateNote(note!!._id, noteRequest)
                 }
             }
         }
@@ -77,8 +77,8 @@ class NoteFragment : Fragment() {
         if (jsonNote != null) {
             note = Gson().fromJson<NoteResponse>(jsonNote, NoteResponse::class.java)
             note?.let {
-                binding.txtTitle.setText(it.message.title)
-                binding.txtDescription.setText(it.message.description)
+                binding.txtTitle.setText(it.title)
+                binding.txtDescription.setText(it.description)
             }
         }
         else{
